@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lorenify</title>
+
+    <style>
+      .form {
+        display: flex;
+      }
+
+      .form textarea {
+        flex-grow: 1;
+      }
+    </style>
+
+    <script>
+      function lorenify(input) {
+        return input
+          .replace(/^(\s*)I am\b/gi, "$1We are")
+          .replace(/(\.\s*)\bI am\b/gi, "$1We are")
+          .replace(/\bI am\b/gi, "we are")
+
+          .replace(/^(\s*)I/gi, "$1We")
+          .replace(/(\.\s*)\bI/gi, "$1We")
+          .replace(/\bI\b/gi, "we")
+
+          .replace(/\bMoshe(\s*)$/gi, "Loren$1");
+      }
+
+      document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector("#lorenify").onclick = function() {
+          const outputElem = document.querySelector("#output");
+
+          outputElem.value = lorenify(document.querySelector("#input").value);
+
+          outputElem.select();
+          outputElem.setSelectionRange(0, 99999);
+          document.execCommand("copy");
+        };
+      });
+    </script>
+  </head>
+  <body>
+    <div class="app">
+      <h1>Lorenify your email messages automatically</h1>
+
+      <h3>Free plan (pay Moshe to upgrade)</h3>
+
+      <div class="form">
+        <textarea
+          name=""
+          id="input"
+          cols="30"
+          rows="10"
+          placeholder="Paste the email..."
+        ></textarea>
+
+        <button id="lorenify">Lorenify</button>
+
+        <textarea
+          name=""
+          id="output"
+          cols="30"
+          rows="10"
+          placeholder="Lorenified email will appear here..."
+        ></textarea>
+      </div>
+    </div>
+  </body>
+</html>
